@@ -141,8 +141,9 @@ const Right: React.FC = () => {
 						onClick={()=>setShowMenu(!showMenu)}
 					>
 						<FaUserCircle size="2rem"/>
-						{showMenu && <div style={{position: "absolute", right: 0, border: "1px solid rgba(0,0,0,0.1)", backgroundColor: "white", width: "100px"}}>
-							<Pill onClick={()=>history.push("/account")}>Account</Pill>
+						{showMenu && <div style={{position: "absolute", right: 0, border: "1px solid rgba(0,0,0,0.1)", backgroundColor: "white", width: "150px"}}>
+							{authStore.authStore.user.scope === 'admin' && <Pill onClick={()=>history.push("/admin")}>Admin</Pill>}
+							<Pill onClick={()=>history.push("/account")}>Account ({authStore.authStore.user.email})</Pill>
 							<Pill onClick={()=>{
 								localStorage.removeItem('access')
 								authStore.authStore.logout()

@@ -65,7 +65,7 @@ const Form: React.FC<FormType> = ({ onSubmitProp, isLoading }) => {
 				<Label>Password</Label>
 				<Input
 					type="password"
-					{...register('password', {required: true, minLength: 6})}
+					{...register('password', {required: true, minLength: 1})}
 					color={errors.password ? "red" : ""}
 				/>
 				{errors.password?.type === 'required' && <Error>This field is required</Error>}

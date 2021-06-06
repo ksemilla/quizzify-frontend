@@ -3,7 +3,8 @@ import { observable, action } from 'mobx'
 type UserValues = {
 	id?: number;
 	email?: string;
-	main_team?: string;
+	main_team_id?: number;
+	scope?: string;
 }
 
 export class AuthStore {
