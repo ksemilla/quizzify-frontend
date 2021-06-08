@@ -18,7 +18,7 @@ type InlineType = {
 const Inline: React.FC<InlineType> = ({ organization }) => {
 	const history = useHistory()
 	return (
-		<Element onClick={()=>history.push(`/admin/organization/${organization.id}`)}>
+		<Element onClick={()=>history.push(`/organization/${organization.id}`)}>
 			{organization.name}
 		</Element>
 	)
