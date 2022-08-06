@@ -1,5 +1,5 @@
 {
-    "editor.detectIndentation": false,
+  "editor.detectIndentation": false,
     "[typescriptreact]": {
     "editor.detectIndentation": false,
     "editor.tabSize": 2,
@@ -16,6 +16,11 @@
     "editor.insertSpaces": true
   },
   "[json]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[jsonC]": {
     "editor.detectIndentation": false,
     "editor.tabSize": 2,
     "editor.insertSpaces": true
