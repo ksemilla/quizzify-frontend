@@ -1,9 +1,24 @@
 {
     "editor.detectIndentation": false,
     "[typescriptreact]": {
-		"editor.detectIndentation": false,
-		"editor.tabSize": 2,
-		"editor.insertSpaces": false
-	},
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[css]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
     "js/ts.implicitProjectConfig.experimentalDecorators": true
 }
