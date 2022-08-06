@@ -25,5 +25,6 @@
     "editor.tabSize": 2,
     "editor.insertSpaces": true
   },
-    "js/ts.implicitProjectConfig.experimentalDecorators": true
+    "js/ts.implicitProjectConfig.experimentalDecorators": true,
+    "css.customData": [".vscode/css_custom_data.json"]
 }
