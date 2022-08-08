@@ -1,9 +1,5 @@
-const App: React.FC = () => {
-  return (
-    <div className="text-2xl">
-      test
-    </div>
-  );
-}
+import Router from "routes";
+
+const App: React.FC = () => <Router />
 
 export default App
