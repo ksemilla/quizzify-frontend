@@ -4,6 +4,8 @@ import { useFormContext } from "react-hook-form"
 import { classNames } from "utils"
 import { ExtendedChoice } from ".."
 import type { Identifier, XYCoord } from 'dnd-core'
+import TextareaAutosize from 'react-textarea-autosize'
+import { XCircleIcon } from "@heroicons/react/outline"
 
 interface ChoiceProps {
   questionIdx: number,
@@ -12,6 +14,7 @@ interface ChoiceProps {
   moveChoice: (dragIndex: number, hoverIndex: number) => void
   choice: ExtendedChoice,
   questionType: 'single' | 'multi' | 'text' | 'exact-text'
+  remove: (idx: number) => void;
 }
 
 interface DragItem {
@@ -20,12 +23,12 @@ interface DragItem {
   type: string
 }
 
-const Choice: React.FC<ChoiceProps> = ({ id, index, questionIdx, moveChoice, questionType, choice }) => {
+const Choice: React.FC<ChoiceProps> = ({ id, index, questionIdx, moveChoice, questionType, choice, remove }) => {
 
   const { register, formState: { errors }, setValue, watch, getValues } = useFormContext()
   const isAnswer = watch(`items.${questionIdx}.choices.${index}.isAnswer`)
 
-  const dragRef = useRef<HTMLDivElement>(null)
+  // const dragRef = useRef<HTMLDivElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
 
   const [{ handlerId }, drop] = useDrop<
@@ -99,10 +102,11 @@ const Choice: React.FC<ChoiceProps> = ({ id, index, questionIdx, moveChoice, que
     }),
   })
 
-  drag(dragRef)
-  drop(preview(previewRef))
+  // drag(dragRef)
+  // drop(preview(previewRef))
+  drag(drop(previewRef))
 
-  const onSelect: React.MouseEventHandler<HTMLDivElement> = e => {
+  const onSelect: React.MouseEventHandler<HTMLDivElement> = () => {
     if (questionType === 'multi') {
       setValue(`items.${questionIdx}.choices.${index}.isAnswer`, !isAnswer)
     } else if (questionType === 'single') {
@@ -126,39 +130,41 @@ const Choice: React.FC<ChoiceProps> = ({ id, index, questionIdx, moveChoice, que
       ref={previewRef}
       data-handler-id={handlerId}
       className={classNames(
-        "flex",
+        "flex space-x-2 rounded-md hover:bg-gray-200",
         isDragging ? "opacity-0" : "opacity-100",
       )}
-      onClick={onSelect}
     >
       <div
-        ref={dragRef}
+        // ref={dragRef}
         className="w-12 flex items-center justify-center text-3xl cursor-move "
         onClick={e=>e.stopPropagation()}
       >
-        &bull;
+        {/* &bull; */}
       </div>
-      <div className={classNames(
-        "flex flex-1 p-1 rounded-md",
-        isAnswer ? "bg-green-600" : ""
+      <div
+        onClick={onSelect}
+        className={classNames(
+        "flex flex-1 p-1 rounded-md border ",
+        isAnswer ? "border-green-500" : "border-transparent"
       )} >
         <div
           className={classNames(
             "w-12 flex items-center justify-center hover:text-blue-500",
-            isAnswer ? "text-white": ""
           )}
-        >{String.fromCharCode(index+65)}</div>
-          <input
-            type="text"
+        >{String.fromCharCode(index+65)}.</div>
+          <TextareaAutosize
             {...register(`items.${questionIdx}.choices.${index}.value`, { required: true } )}
             className={classNames(
-              "block w-full shadow-none border-none sm:text-sm rounded-md font-medium",
-              errors?.items?.[questionIdx]?.choices?.[index]?.value ? "focus:border-red-500 focus:ring-red-500" : "focus:border-indigo-500 focus:ring-indigo-500",
-              isAnswer ? "bg-green-600 text-white" : ""
+              "block w-full shadow-none sm:text-sm rounded-md font-medium resize-none",
+              errors?.items?.[questionIdx]?.choices?.[index]?.value ? "focus:border-red-500 focus:ring-red-500 border-red-500" : "focus:border-indigo-500 focus:ring-indigo-500 border-none",
             )}
             onClick={e=>e.stopPropagation()}
           />
       </div>
+      <div className="w-32 flex items-center"
+        onClick={()=>remove(index)}
+      ><XCircleIcon className="h-5 w-5 hover:text-red-500 cursor-pointer"/></div>
+      <div className="w-8"/>
     </div>
   )
 }
