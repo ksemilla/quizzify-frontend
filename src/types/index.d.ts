@@ -20,3 +20,16 @@ export type Choice = {
   value: string,
   isAnswer: boolean,
 }
+
+export type User = {
+  name: string,
+  email: string,
+  main_team_id: string,
+  scope: "admin" | 'user',
+}
+
+export interface AuthStore {
+  user: User | null
+  setUser: (user: User) => void
+  logout: () => void
+}

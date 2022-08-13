@@ -32,6 +32,7 @@ const Question: FC<QuestionProps> = ({ id, index, moveQuestion, remove: removeQu
 
   const isFirstRender = useIsFirstRender()
   const type = watch(`items.${index}.type`)
+  const currChoices = watch(`items.${index}.choices`)
 
   const dragRef = useRef<HTMLDivElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
@@ -144,12 +145,10 @@ const Question: FC<QuestionProps> = ({ id, index, moveQuestion, remove: removeQu
   }, [type])
 
   useEffect(()=>{
-    register(`question-${index}`, { validate: () => { 
-      const choicesLength = getValues(`items.${index}.choices`).length
-      if (['single', 'multi'].includes(type) &&  choicesLength < 2) return false
-      return true
-     } })
-  }, [])
+    if (currChoices?.length >= 2) {
+      clearErrors(`question-${index}`)
+    }
+  }, [currChoices])
 
   return (
     <div ref={previewRef} data-handler-id={handlerId}>
@@ -203,7 +202,13 @@ const Question: FC<QuestionProps> = ({ id, index, moveQuestion, remove: removeQu
             renderChoice(choice, _idx)
           ))}
 
-          <button onClick={onAppend}
+          <button
+            {...register(`question-${index}`, { validate: () => { 
+              const choicesLength = getValues(`items.${index}.choices`).length
+              if (['single', 'multi'].includes(type) &&  choicesLength < 2) return false
+              return true
+             } })}
+            onClick={onAppend}
             className="ml-14 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add Choice</button>
         </div>}
         {type === 'exact-text' && <div className='flex space-x-2'>
@@ -220,7 +225,7 @@ const Question: FC<QuestionProps> = ({ id, index, moveQuestion, remove: removeQu
         </div>}
         
       </div>
-      {errors?.[`question-${index}`] && <p>This question requires atleast 2 choices</p>}
+      {errors?.[`question-${index}`] && <p className='text-sm mt-1 mb-5 ml-4 font-normal text-red-600'>Single/multi requires atleast 2 choices</p>}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Choice, Quiz, QuizItem } from "types"
 import { classNames } from "utils"
+import PrimaryInfo from "./components/PrimaryInfo"
 import QuizItems from "./components/QuizItems"
 
 export type ExtendedChoice = Choice & { uuid: string }
@@ -103,35 +104,25 @@ const Form: React.FC = () => {
     // shouldUnregister: true
   })
 
-  const { handleSubmit, formState: { errors } } = methods
+  const { handleSubmit } = methods
 
   const onSubmit = handleSubmit(data => {
-
     console.log("data", data)
   })
-
-  console.log('errors', errors)
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={onSubmit}>
-
-        <div>
+        <div className="space-y-2">
+          <PrimaryInfo />
+          <div className="border-2 border-black w-full border-gray-500" />
+          <QuizItems />
+          <div className="border-2 border-black w-full border-gray-500" />
           <div>
-            <label>Title</label>
-            <input
-              {...methods.register('title')}
-              className={classNames(
-                "border",
-                errors?.title ? "border-red-500" : ""
-              )}
-            />
+            <button 
+            type="submit"
+            className="inline-flex items-center px-6 py-2 border border-transparent text-md font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
           </div>
-        </div>
-
-        <QuizItems />
-        <div>
-          <button type="submit">Save</button>
         </div>
       </form>
     </FormProvider>

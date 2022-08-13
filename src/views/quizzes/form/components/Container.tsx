@@ -4,8 +4,7 @@ import { ExtendedQuizItem } from '..'
 
 import Question from './Question'
 
-export const Container: FC = () => {
-  {
+export const Container = () => {
     const { getValues, clearErrors, unregister } = useFormContext()
     const { fields, append, move, remove } = useFieldArray({
       name: 'items',
@@ -42,7 +41,7 @@ export const Container: FC = () => {
     return (
       <>
         <div
-          className='space-y-6'
+          className='divide-y divide-gray-200'
         >{fields.map((item: any, i) => renderQuestion(item, i))}</div>
         <hr />
         <button
@@ -51,5 +50,4 @@ export const Container: FC = () => {
         >Add Question</button>
       </>
     )
-  }
 }
